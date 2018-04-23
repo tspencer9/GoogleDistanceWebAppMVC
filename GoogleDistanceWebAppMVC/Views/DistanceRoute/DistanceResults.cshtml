@@ -1,0 +1,22 @@
+﻿@model GoogleDistanceWebAppMVC.ViewModels.DistanceRoute
+
+@{
+    ViewBag.Title = "Distance Results";
+}
+
+<div class="form-horizontal">
+    <h2>Distance Route Results</h2>
+    <h3>These are the statistics for your two locations...</h3>
+    <hr />
+    <br />
+    <table class="table table-striped">
+        <tr>
+            <th>Distance (in miles)</th>
+            <th>Travel duration</th>
+        </tr>
+        <tr>
+            <td>@Model.Distance</td>
+            <td>@Model.Duration</td>
+        </tr>
+    </table>
+</div>
