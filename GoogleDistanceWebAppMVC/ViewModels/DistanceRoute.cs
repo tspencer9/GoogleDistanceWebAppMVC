@@ -58,10 +58,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
                     RootLocationBase root = JsonConvert.DeserializeObject<RootLocationBase>(result);
                     idLocations[i] = root.results[0].place_id;
                 }
-                else
-                    Console.WriteLine("Connection to Google Places API unsuccessful...");
             }
-
 
             var responseDistance = await http.GetAsync(BuildUrlForDistance(idLocations[0], idLocations[1]));
 

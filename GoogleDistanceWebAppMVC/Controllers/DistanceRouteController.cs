@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,12 +17,12 @@ namespace GoogleDistanceWebAppMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(DistanceRoute route)
+        public async Task<ActionResult> Index(DistanceRoute route)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            route.FindDistance();
+            await Task.Run(() => route.FindDistance());
             return RedirectToAction("DistanceResults", route);
         }
 
