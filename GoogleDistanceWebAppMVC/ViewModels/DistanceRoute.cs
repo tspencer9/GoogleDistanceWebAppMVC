@@ -33,7 +33,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
                     locationForUrl += locationAsArray[i];
             }
 
-            return "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAe19SG-FjgoyLwiZFXo3V5cWFXO_KKsrg&query=" + location;
+            return "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAe19SG-FjgoyLwiZFXo3V5cWFXO_KKsrg&query=" + locationForUrl;
         }
 
         private string BuildUrlForDistance(string id1, string id2)
