@@ -17,12 +17,15 @@ namespace GoogleDistanceWebAppMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index(DistanceRoute route)
+        public ActionResult Index(DistanceRoute route)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            await Task.Run(() => route.FindDistance());
+            Task.Run(() => route.FindDistance());
+
+            while (route.Distance == null || route.Duration == null) { }
+
             return RedirectToAction("DistanceResults", route);
         }
 
