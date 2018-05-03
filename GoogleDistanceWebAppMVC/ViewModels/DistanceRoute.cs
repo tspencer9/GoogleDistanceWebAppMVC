@@ -56,7 +56,14 @@ namespace GoogleDistanceWebAppMVC.ViewModels
                 {
                     var result = await responseId.Content.ReadAsStringAsync();
                     RootLocationBase root = JsonConvert.DeserializeObject<RootLocationBase>(result);
-                    idLocations[i] = root.results[0].place_id;
+                    try
+                    {
+                        idLocations[i] = root.results[0].place_id;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
                 }
             }
 
