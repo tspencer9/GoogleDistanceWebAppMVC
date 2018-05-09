@@ -42,7 +42,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
             return url + "place_id:" + id1 + "&destinations=place_id:" + id2;
         }
 
-        public void FindDistance()
+        public async void FindDistance()
         {
             string[] locationUrls = { BuildUrlForLocationId(this.Location1), BuildUrlForLocationId(this.Location2) },
                 idLocations = new string[2];
@@ -50,7 +50,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
 
             for (int i = 0; i < idLocations.Length; i++)
             {
-                var responseId = http.GetAsync(locationUrls[i]).Result;
+                var responseId = await http.GetAsync(locationUrls[i]);
 
                 if (responseId.IsSuccessStatusCode)
                 {
@@ -67,7 +67,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
                 }
             }
 
-            var responseDistance = http.GetAsync(BuildUrlForDistance(idLocations[0], idLocations[1])).Result;
+            var responseDistance = await http.GetAsync(BuildUrlForDistance(idLocations[0], idLocations[1]));
 
             if (responseDistance.IsSuccessStatusCode)
             {

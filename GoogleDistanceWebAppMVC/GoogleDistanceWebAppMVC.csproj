@@ -195,13 +195,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\DistanceRoute\Index.cshtml" />
     <Content Include="Views\DistanceRoute\DistanceResults.cshtml" />
-    <Content Include="Views\DistanceRoute\ErrorResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Experimental\" />
-    <Folder Include="Views\RouteExperiment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
