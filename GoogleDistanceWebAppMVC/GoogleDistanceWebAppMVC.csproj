@@ -195,6 +195,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\DistanceRoute\Index.cshtml" />
     <Content Include="Views\DistanceRoute\DistanceResults.cshtml" />
+    <Content Include="Views\DistanceRoute\ErrorResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,9 +22,15 @@ namespace GoogleDistanceWebAppMVC.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            Task.Run(() => route.FindDistance());
-
-            while (route.Distance == null || route.Duration == null) { }
+            try
+            {
+                route.FindDistance();
+                //while (route.Distance == null || route.Duration == null) { }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                return RedirectToAction("ErrorResult", e);
+            }
 
             return RedirectToAction("DistanceResults", route);
         }
@@ -32,6 +38,11 @@ namespace GoogleDistanceWebAppMVC.Controllers
         public ActionResult DistanceResults(DistanceRoute route)
         {
             return View(route);
+        }
+
+        public ActionResult ErrorResult(String error)
+        {
+            return View(error);
         }
     }
 }
