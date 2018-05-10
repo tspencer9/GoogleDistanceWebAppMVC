@@ -24,10 +24,16 @@ namespace GoogleDistanceWebAppMVC.Controllers
 
             try
             {
-                Task.Run(() => route.FindDistance());
-                while (route.Distance == null || route.Duration == null) { }
+                //Task.Run(() => route.FindDistance());
+                //while (route.Distance == null || route.Duration == null) { }
+
+                route.FindDistance();
             }
             catch (IndexOutOfRangeException e)
+            {
+                return RedirectToAction("ErrorResult", e);
+            }
+            catch(NullReferenceException e)
             {
                 return RedirectToAction("ErrorResult", e);
             }
@@ -40,7 +46,7 @@ namespace GoogleDistanceWebAppMVC.Controllers
             return View(route);
         }
 
-        public ActionResult ErrorResult(String error)
+        public ActionResult ErrorResult(Exception error)
         {
             return View(error);
         }
