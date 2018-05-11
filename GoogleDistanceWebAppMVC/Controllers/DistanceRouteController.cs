@@ -24,9 +24,6 @@ namespace GoogleDistanceWebAppMVC.Controllers
 
             try
             {
-                //Task.Run(() => route.FindDistance());
-                //while (route.Distance == null || route.Duration == null) { }
-
                 route.FindDistance();
             }
             catch (IndexOutOfRangeException e)

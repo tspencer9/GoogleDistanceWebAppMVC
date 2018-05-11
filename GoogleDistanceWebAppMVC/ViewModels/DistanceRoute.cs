@@ -63,7 +63,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
                     }
                     catch (IndexOutOfRangeException)
                     {
-                        throw new IndexOutOfRangeException("Invalid location. The place you entered does not exist.");
+                        throw new IndexOutOfRangeException();
                     }
                 }
             }
@@ -81,7 +81,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
                 }
                 catch (NullReferenceException)
                 {
-                    throw new NullReferenceException("The place you entered is to general. Please enter a more exact location.");
+                    throw new NullReferenceException();
                 }
             }
         }
