@@ -33,7 +33,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
                     locationForUrl += locationAsArray[i];
             }
 
-            return "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAe19SG-FjgoyLwiZFXo3V5cWFXO_KKsrg&query=" + location;
+            return "https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAe19SG-FjgoyLwiZFXo3V5cWFXO_KKsrg&query=" + locationForUrl;
         }
 
         private string BuildUrlForDistance(string id1, string id2)
@@ -42,7 +42,7 @@ namespace GoogleDistanceWebAppMVC.ViewModels
             return url + "place_id:" + id1 + "&destinations=place_id:" + id2;
         }
 
-        public async void FindDistance()
+        public void FindDistance()
         {
             string[] locationUrls = { BuildUrlForLocationId(this.Location1), BuildUrlForLocationId(this.Location2) },
                 idLocations = new string[2];
@@ -50,27 +50,39 @@ namespace GoogleDistanceWebAppMVC.ViewModels
 
             for (int i = 0; i < idLocations.Length; i++)
             {
-                var responseId = await http.GetAsync(locationUrls[i]);
+                var responseId = http.GetAsync(locationUrls[i]).Result;
 
                 if (responseId.IsSuccessStatusCode)
                 {
-                    var result = await responseId.Content.ReadAsStringAsync();
+                    var result = responseId.Content.ReadAsStringAsync().Result;
                     RootLocationBase root = JsonConvert.DeserializeObject<RootLocationBase>(result);
-                    idLocations[i] = root.results[0].place_id;
+
+                    try
+                    {
+                        idLocations[i] = root.results[0].place_id;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
                 }
-                else
-                    Console.WriteLine("Connection to Google Places API unsuccessful...");
             }
 
-
-            var responseDistance = await http.GetAsync(BuildUrlForDistance(idLocations[0], idLocations[1]));
+            var responseDistance = http.GetAsync(BuildUrlForDistance(idLocations[0], idLocations[1])).Result;
 
             if (responseDistance.IsSuccessStatusCode)
             {
-                var result = await responseDistance.Content.ReadAsStringAsync();
+                var result = responseDistance.Content.ReadAsStringAsync().Result;
                 RootDistanceBase root = JsonConvert.DeserializeObject<RootDistanceBase>(result);
-                this.Distance = root.rows[0].elements[0].distance.text;
-                this.Duration = root.rows[0].elements[0].duration.text;
+                try
+                {
+                    this.Distance = root.rows[0].elements[0].distance.text;
+                    this.Duration = root.rows[0].elements[0].duration.text;
+                }
+                catch (NullReferenceException)
+                {
+                    throw new NullReferenceException();
+                }
             }
         }
     }
